@@ -15,26 +15,26 @@ public class SimpleProductService {
 
     private ListProductRepository listProductRepository;
     private ModelMapper modelMapper;
+    private ValidationService validationService;
 
     @Autowired
     SimpleProductService(
             ListProductRepository listProductRepository,
-            ModelMapper modelMapper
+            ModelMapper modelMapper,
+            ValidationService validationService
     ) {
         this.listProductRepository = listProductRepository;
         this.modelMapper = modelMapper;
+        this.validationService = validationService;
     }
 
 
     public ProductDTO add(ProductDTO productDTO) {
-        // 1. ProductDto를 Product로 변환하는 코드;
-        // +) DTO는 "표현", "응용"계층에만 존재, 이상은 나아가지 않음!!!!ㅣ;
         Product product = modelMapper.map(productDTO, Product.class);
-        // 2. 레포지토리를 호출하는 코드;
+        validationService.checkValid(product);
+
         Product savedProduct = listProductRepository.add(product);
-        // 3. Product를 ProductDTO로 변환하는 코드;
         ProductDTO savedProductDTO = modelMapper.map(savedProduct, ProductDTO.class);
-        // 4. DTO를 반환하는 코드;
         return savedProductDTO;
 
     }

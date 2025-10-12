@@ -1,12 +1,25 @@
 package koDong.productManagementApplication.domain;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
 import java.util.Objects;
 
 public class Product {
     private Long id;
+
+    @Size(min = 1, max = 100)
     private String name;
+
+    @Max(1_000_000)
+    @Min(0)
     private Integer price;
+
+    @Max(9_999)
+    @Min(0)
     private Integer amount;
+
 
     public Boolean sameId(Long id) {
         return this.id.equals(id);
@@ -15,6 +28,7 @@ public class Product {
     public Boolean containsName(String name) {
         return this.name.contains(name); // 어떤 값이 포함되어있는지 확인!;
     }
+
 
     @Override // id만 같으면 같은 인스턴스라고 인식하기 위해서 오버라이딩 함!!!!;
     public boolean equals(Object o) {
@@ -38,9 +52,11 @@ public class Product {
         this.name = name;
     }
 
+
     public void setPrice(Integer price) {
         this.price = price;
     }
+
 
     public void setAmount(Integer amount) {
         this.amount = amount;

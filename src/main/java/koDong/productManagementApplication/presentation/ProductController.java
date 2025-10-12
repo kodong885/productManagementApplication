@@ -1,12 +1,14 @@
 package koDong.productManagementApplication.presentation;
 
+import jakarta.validation.Valid;
 import koDong.productManagementApplication.application.SimpleProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Validated // 이게 필요없다고 하는데, 왜?????
 @RestController
 public class ProductController {
 
@@ -20,7 +22,7 @@ public class ProductController {
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ProductDTO createProduct(
-            @RequestBody ProductDTO productDTO
+            @Valid @RequestBody ProductDTO productDTO
     ) {
         return simpleProductService.add(productDTO);
     }
@@ -31,22 +33,14 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public List<ProductDTO> findAllProduct() {
-        return simpleProductService.findAll();
-    }
-
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public List<ProductDTO> findProducts(
-            @RequestParam(required = false) String name
-            // @RequestParam은 기본적으로 파라미터를 필수로 받도록되어있음
-            // → required = false;
-    ) {
-        if (null == name) {
-            return simpleProductService.findAll(); // 이건 뭐하는 코드지....??
+    public List<ProductDTO> findProducts(@RequestParam(required = false) String name) {
+        if (name == null || name.isBlank()) {
+            // name이 없으면 전체 상품 조회
+            return simpleProductService.findAll();
         } else {
+            // name이 있으면 이름 포함 검색
             return simpleProductService.findByNameContaining(name);
         }
-
     }
 
     @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
@@ -66,3 +60,5 @@ public class ProductController {
     }
 
 }
+
+

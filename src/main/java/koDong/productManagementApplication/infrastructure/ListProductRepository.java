@@ -1,5 +1,6 @@
 package koDong.productManagementApplication.infrastructure;
 
+import koDong.productManagementApplication.domain.EntityNotFoundException;
 import koDong.productManagementApplication.domain.Product;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +27,7 @@ public class ListProductRepository {
         return products.stream()
                 .filter(product -> product.sameId(id))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("Product를 찾지 못했습니다!"));
     }
 
     public List<Product> findAll() {
@@ -50,6 +51,8 @@ public class ListProductRepository {
         Product product = this.findById(id);
         products.remove(product);
     }
+
+
 
 
 }
