@@ -20,7 +20,7 @@ public class ListProductRepository {
         product.setId(sequence.getAndAdd(1L));
 
         products.add(product);
-        return product; // 왜 반환하지...???
+        return product;
     }
 
     public Product findById(Long id) {
