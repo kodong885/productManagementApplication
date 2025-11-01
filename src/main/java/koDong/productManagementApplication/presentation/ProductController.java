@@ -49,8 +49,6 @@ public class ProductController {
             @RequestBody ProductDTO productDTO
     ) {
         productDTO.setId(id);
-        // 이거 왜 씀? ( name, price, amount를 받아 productDTO로 받아온 후, 해당 DTO의 id를 세팅함.
-        // 그리고는 service에 넘겨줌;
         return simpleProductService.update(productDTO);
     }
 
