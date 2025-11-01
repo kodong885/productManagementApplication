@@ -30,7 +30,7 @@ public class Product {
     }
 
 
-    @Override // id만 같으면 같은 인스턴스라고 인식하기 위해서 오버라이딩 함!!!!;
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
