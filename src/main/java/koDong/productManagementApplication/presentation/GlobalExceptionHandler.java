@@ -24,7 +24,6 @@ public class GlobalExceptionHandler {
         this.error = error;
     }
 
-    // 이 코드는 전혀 모르겠다...!!!!
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorMessage> handleConstraintViolatedException(
             ConstraintViolationException ex
